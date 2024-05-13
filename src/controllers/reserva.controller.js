@@ -14,7 +14,7 @@ const reservaController = {
   // Obtener una reserva por su ID
   async mostrar(req, res) {
     try {
-      const reserva = await Reserva.findById(req.params.id);
+      const reserva = await Reserva.findById(req.params.id).populate(['usuario', 'huesped', 'habitaciones']);
       if (!reserva) {
         return res.status(404).json({ mensaje: 'Reserva no encontrada' });
       }
