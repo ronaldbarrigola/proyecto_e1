@@ -17,10 +17,16 @@ main().catch(err => console.log(err));
 async function main() {
     const NODE_ENV = process.env.NODE_ENV || 'development'
     if(NODE_ENV=='development'){
-        await mongoose.connect(`mongodb://${process.env.BD_HOST}:27017/${process.env.BD_NAME}`);
+        await mongoose.connect(`mongodb://${process.env.BD_HOST}:27017/${process.env.BD_NAME}`, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+          });
         console.log("CONEXION EXITOSA CON BD MONGODB (D)")
     }else{
-        await mongoose.connect(`mongodb://${process.env.BD_USER}:${process.env.BD_PASSWORD}@${process.env.BD_HOST}:27017/${process.env.BD_NAME}`);
+        await mongoose.connect(`mongodb://${process.env.BD_USER}:${process.env.BD_PASSWORD}@${process.env.BD_HOST}:27017/${process.env.BD_NAME}`, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
         console.log("CONEXION EXITOSA CON BD MONGODB (P)")
     }
 }

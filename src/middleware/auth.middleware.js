@@ -1,9 +1,18 @@
 const jwt = require("jsonwebtoken");
+const Usuario = require("../models/Usuario");
 
-function authMiddlware(req, res, next){
+async function authMiddlware(req, res, next){
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
-    if (token == null)
+
+    const user = await Usuario.findOne({ activeToken: token });
+    if(user == null){
+        return res.status(401).send({
+            auth: false,
+            mensaje: "El token no es valido (Requiere Login)"
+        })
+    }
+    if (token == null )
         return res.status(401).send({
             auth: false,
             mensaje: "No se proporcionó el token de autorización (Requiere Login)"

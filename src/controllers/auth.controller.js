@@ -28,6 +28,9 @@ const authController = {
                     expiresIn: process.env.JWT_EXPIRACION
                 });
 
+                existeUser.activeToken = token;
+                await existeUser.save();
+
                 const {email, name, _id} = existeUser;
 
                 return res.status(201).json({
@@ -66,6 +69,19 @@ const authController = {
 
         } catch (error) {
             return res.status(500).json({mensaje: "Error al registrar el usuario", error: error.message});
+        }
+    },
+
+    async cerrarSesion(req, res){
+        try {
+            const token = req.header('Authorization').replace('Bearer ', '');
+            
+            await Usuario.findOneAndUpdate({ activeToken: token }, { activeToken: null });
+
+            return res.status(200).json({ message: 'Sesion cerrada!' });
+            
+        } catch (error) {
+            console.log(error)
         }
     }
 }

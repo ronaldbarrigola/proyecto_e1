@@ -4,7 +4,7 @@ const reservaController = {
   // Obtener todas las reservas
   async listar(req, res) {
     try {
-      const reservas = await Reserva.find();
+      const reservas = await Reserva.find().populate(['usuario', 'huesped', 'habitaciones']);
       res.json(reservas);
     } catch (error) {
       return res.status(500).json({ mensaje: 'Hubo un error al obtener las reservas', error: error.message });

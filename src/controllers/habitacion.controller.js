@@ -85,7 +85,7 @@ const habitacionController = {
   async buscarHabitacionesPorDisponibilidad(req, res) {
     try {
       let disponible = req.query.disponible
-      const habitaciones = await Habitacion.find({ disponible: disponible });
+      const habitaciones = await Habitacion.find({ disponible: disponible }).populate('tipo_habitacion_id');
       return res.status(200).json(habitaciones);
     } catch (error) {
       return res.status(500).json({ mensaje:'Hubo un error al buscar habitaciones disponibles para un tipo específico'}, error);

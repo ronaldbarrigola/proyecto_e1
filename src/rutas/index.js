@@ -17,6 +17,8 @@ Route.get("/", function(req, res){
 Route.post("/login", authController.login);
 Route.post("/registro", authController.registro);
 
+Route.post("/cerrar-sesion", authMiddleware, authController.cerrarSesion);
+
 
 // consultas avanzadas 
 //***************************** CONSULTAS AVANZADAS *************************************** */
@@ -75,7 +77,7 @@ Route.delete('/tipo-habitacion/:id', tipoHabitacionController.eliminar);
 
 
 // Habitacion
-Route.get('/habitacion', habitacionController.listar);
+Route.get('/habitacion', authMiddleware,habitacionController.listar);
 // Ruta para obtener una habitación por su ID
 Route.get('/habitacion/:id', habitacionController.mostrar);
 // Ruta para agregar una nueva habitación

@@ -16,6 +16,9 @@ const usuarioSchema = new mongoose.Schema({
     estado: {
         type: Boolean,
         default: true
+    },
+    activeToken: { 
+        type: String
     }
 });
 
